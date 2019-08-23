@@ -1,9 +1,8 @@
-import tensorflow as tf
 import argparse
-import numpy as np
 
-from model import Model
+import numpy as np
 from config import cfg
+from model import Model
 from tfflat.base import Trainer
 from tfflat.utils import mem_info
 

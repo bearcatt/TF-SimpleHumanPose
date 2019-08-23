@@ -1,14 +1,8 @@
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
-import numpy as np
-import json
-import math
-from functools import partial
-
 from config import cfg
-from tfflat.base import ModelDesc
-
 from net.hrnet import HRNet
+from tfflat.base import ModelDesc
 
 
 class Model(ModelDesc):
@@ -36,7 +30,7 @@ class Model(ModelDesc):
         y = tf.floor(tf.reshape(coord[:, :, 1], [-1, 1, 1, cfg.num_kps]) / cfg.input_shape[0] * output_shape[0] + 0.5)
 
         heatmap = tf.exp(-(((xx - x) / tf.to_float(sigma)) ** 2) / tf.to_float(2) - (
-                    ((yy - y) / tf.to_float(sigma)) ** 2) / tf.to_float(2))
+                ((yy - y) / tf.to_float(sigma)) ** 2) / tf.to_float(2))
 
         return heatmap * 255.
 

@@ -1,5 +1,6 @@
-from collections import defaultdict
 import functools
+from collections import defaultdict
+
 import tensorflow as tf
 
 

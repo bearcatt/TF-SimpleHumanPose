@@ -1,17 +1,12 @@
-from collections import Counter
-import functools
-import configparser
 import ast
+import configparser
 
-import tensorflow as tf
 import tensorflow.contrib.slim as slim
-from tensorflow.python.framework import ops
-from tensorflow.contrib.layers.python.layers import layers
-from tensorflow.python.ops.init_ops import VarianceScaling
-
-from net.head import ClsHead
-from net.stage import HRStage
 from net.front import HRFront
+from net.stage import HRStage
+from tensorflow.contrib.layers.python.layers import layers
+from tensorflow.python.framework import ops
+from tensorflow.python.ops.init_ops import VarianceScaling
 
 
 def he_normal_fanout(seed=None):

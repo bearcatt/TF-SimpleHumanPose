@@ -1,5 +1,7 @@
-import zmq
 import multiprocessing as mp
+
+import zmq
+
 from .serialize import loads, dumps
 
 

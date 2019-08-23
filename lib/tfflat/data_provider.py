@@ -1,19 +1,20 @@
 # copy from tensorpack: https://github.com/ppwwyyxx/tensorpack
-import numpy as np
-import threading
+import atexit
+import errno
 import multiprocessing as mp
+import threading
+import uuid
 import weakref
 from contextlib import contextmanager
-from .serialize import loads, dumps
-import errno
-import uuid
-import os
-import zmq
-import atexit
-from itertools import cycle
 from copy import copy
-from .utils import get_rng
+from itertools import cycle
+
+import numpy as np
+import zmq
 from setproctitle import setproctitle
+
+from .serialize import loads, dumps
+from .utils import get_rng
 
 
 def del_weakref(x):

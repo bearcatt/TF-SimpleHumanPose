@@ -1,8 +1,9 @@
 import multiprocessing as mp
+
 import numpy as np
 
-from .serialize import loads, dumps
 from .serialize import dump_pkl, load_pkl
+from .serialize import loads, dumps
 from .utils import del_file
 
 # reduce_method

@@ -1,9 +1,9 @@
-from scipy.io import loadmat, savemat
-from PIL import Image
-import os
-import os.path as osp
-import numpy as np
 import json
+import os.path as osp
+
+import numpy as np
+from PIL import Image
+from scipy.io import loadmat
 
 
 # run this code in the 'mpii_human_pose_v1_u12_2' folder
@@ -59,14 +59,17 @@ for img_id in range(img_num):
                     annot_file['annolist'][0][0][0][img_id]['annorect'][0][pid]['annopoints']['point'][0][0][0])
                 for jid in range(annot_joint_num):
                     annot_jid = \
-                    annot_file['annolist'][0][0][0][img_id]['annorect'][0][pid]['annopoints']['point'][0][0][0][jid][
-                        'id'][0][0]
+                        annot_file['annolist'][0][0][0][img_id]['annorect'][0][pid]['annopoints']['point'][0][0][0][
+                            jid][
+                            'id'][0][0]
                     kps[annot_jid][0] = \
-                    annot_file['annolist'][0][0][0][img_id]['annorect'][0][pid]['annopoints']['point'][0][0][0][jid][
-                        'x'][0][0]
+                        annot_file['annolist'][0][0][0][img_id]['annorect'][0][pid]['annopoints']['point'][0][0][0][
+                            jid][
+                            'x'][0][0]
                     kps[annot_jid][1] = \
-                    annot_file['annolist'][0][0][0][img_id]['annorect'][0][pid]['annopoints']['point'][0][0][0][jid][
-                        'y'][0][0]
+                        annot_file['annolist'][0][0][0][img_id]['annorect'][0][pid]['annopoints']['point'][0][0][0][
+                            jid][
+                            'y'][0][0]
                     kps[annot_jid][2] = 1
 
                 # bbox extract from annotated kps

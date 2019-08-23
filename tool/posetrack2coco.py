@@ -1,10 +1,8 @@
-import numpy as np
-import json
 import glob
-import os
+import json
 import os.path as osp
+
 from PIL import Image
-from pycocotools.coco import COCO
 
 # run this code in the 'posetrack_data' folder
 

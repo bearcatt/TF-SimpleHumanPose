@@ -1,27 +1,20 @@
+import argparse
+import json
+import math
 import os
 import os.path as osp
-import numpy as np
-import argparse
-from config import cfg
-import cv2
-import sys
 import time
-import json
-from PIL import Image
-import matplotlib.pyplot as plt
-import pickle
-from tqdm import tqdm
-import math
 
-import tensorflow as tf
-
+import cv2
+import numpy as np
+from config import cfg
+from dataset import Dataset
+from gen_batch import generate_batch
+from model import Model
+from nms.nms import oks_nms
 from tfflat.base import Tester
 from tfflat.utils import mem_info
-from model import Model
-
-from gen_batch import generate_batch
-from dataset import Dataset
-from nms.nms import oks_nms
+from tqdm import tqdm
 
 
 def test_net(tester, dets, det_range, gpu_id):
@@ -95,7 +88,7 @@ def test_net(tester, dets, det_range, gpu_id):
                         x += diff[0] * .25
                         y += diff[1] * .25
                     kps_result[image_id, j, :2] = (
-                    x * cfg.input_shape[1] / cfg.output_shape[1], y * cfg.input_shape[0] / cfg.output_shape[0])
+                        x * cfg.input_shape[1] / cfg.output_shape[1], y * cfg.input_shape[0] / cfg.output_shape[0])
                     kps_result[image_id, j, 2] = hm_j.max() / 255
 
                 vis = False
@@ -123,7 +116,7 @@ def test_net(tester, dets, det_range, gpu_id):
                                                  crop_infos[image_id - start_id][1]
 
                 area_save[image_id] = (crop_infos[image_id - start_id][2] - crop_infos[image_id - start_id][0]) * (
-                            crop_infos[image_id - start_id][3] - crop_infos[image_id - start_id][1])
+                        crop_infos[image_id - start_id][3] - crop_infos[image_id - start_id][1])
 
         # vis
         vis = False

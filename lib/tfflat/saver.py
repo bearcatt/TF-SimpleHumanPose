@@ -1,10 +1,7 @@
+import os
+
 import tensorflow as tf
 from tensorflow.python import pywrap_tensorflow
-import numpy as np
-from config import cfg
-
-import os
-import os.path as osp
 
 
 def get_variables_in_checkpoint_file(file_name):

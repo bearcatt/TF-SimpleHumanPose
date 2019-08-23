@@ -1,16 +1,15 @@
 #!/usr/bin/python3
 # coding=utf-8
 
+import glob
+import json
 import os
 import os.path as osp
-import glob
-import numpy as np
-import cv2
-import json
-import pickle
-import matplotlib.pyplot as plt
-
 import sys
+
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
 
 cur_dir = os.path.dirname(__file__)
 sys.path.insert(0, osp.join(cur_dir, 'PythonAPI'))

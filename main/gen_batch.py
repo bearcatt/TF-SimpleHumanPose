@@ -4,10 +4,7 @@ import numpy as np
 import cv2
 from config import cfg
 import random
-import time
 import math
-from PIL import Image, ImageDraw
-import matplotlib.pyplot as plt
 
 
 def get_affine_transform(center,
@@ -110,7 +107,7 @@ def generate_batch(d, stage='train'):
             if joints[i, 2] > 0:
                 joints[i, :2] = affine_transform(joints[i, :2], trans)
                 joints[i, 2] *= ((joints[i, 0] >= 0) & (joints[i, 0] < cfg.input_shape[1]) & (joints[i, 1] >= 0) & (
-                            joints[i, 1] < cfg.input_shape[0]))
+                        joints[i, 1] < cfg.input_shape[0]))
         target_coord = joints[:, :2]
         target_valid = joints[:, 2]
 

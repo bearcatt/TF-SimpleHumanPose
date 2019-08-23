@@ -1,18 +1,19 @@
-import tensorflow as tf
-import tensorflow.contrib.slim as slim
-import numpy as np
-from collections import OrderedDict as dict
-import setproctitle
+import abc
+import glob
+import math
 import os
 import os.path as osp
-import glob
-import abc
-import math
+from collections import OrderedDict as dict
 
+import numpy as np
+import setproctitle
+import tensorflow as tf
+import tensorflow.contrib.slim as slim
+
+from .logger import colorlogger
 from .net_utils import average_gradients, aggregate_batch, get_optimizer, get_tower_summary_dict
 from .saver import load_model, Saver
 from .timer import Timer
-from .logger import colorlogger
 from .utils import approx_equal
 
 

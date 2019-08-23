@@ -1,5 +1,4 @@
 import tensorflow as tf
-from collections import namedtuple
 
 
 def average_gradients(tower_grads):

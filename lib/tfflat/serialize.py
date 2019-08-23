@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 ### modified from https://github.com/ppwwyyxx/tensorpack
 
-import os
 import sys
+
 import msgpack
 import msgpack_numpy
 
