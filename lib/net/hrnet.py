@@ -2,11 +2,12 @@ import ast
 import configparser
 
 import tensorflow.contrib.slim as slim
-from net.front import HRFront
-from net.stage import HRStage
 from tensorflow.contrib.layers.python.layers import layers
 from tensorflow.python.framework import ops
 from tensorflow.python.ops.init_ops import VarianceScaling
+
+from .front import HRFront
+from .stage import HRStage
 
 
 def he_normal_fanout(seed=None):

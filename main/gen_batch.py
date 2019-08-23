@@ -1,10 +1,10 @@
 import os
 import os.path as osp
-import numpy as np
-import cv2
-from config import cfg
 import random
-import math
+
+import cv2
+import numpy as np
+from config import cfg
 
 
 def get_affine_transform(center,

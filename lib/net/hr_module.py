@@ -1,7 +1,5 @@
-from collections import defaultdict
-
-from net.layers import *
-from net.utils import *
+from .layers import *
+from .utils import *
 
 
 class HRModule():

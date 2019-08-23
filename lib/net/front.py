@@ -1,7 +1,4 @@
-import tensorflow as tf
-import tensorflow.contrib.slim as slim
-from net.layers import *
-from tensorflow.contrib.layers.python.layers import batch_norm
+from .layers import *
 
 
 class HRFront():

@@ -1,4 +1,4 @@
-from net.hr_module import HRModule
+from .hr_module import HRModule
 
 
 class HRStage():

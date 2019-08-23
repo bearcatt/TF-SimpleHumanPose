@@ -367,6 +367,9 @@ class BatchData(object):
                     result.append(
                         np.asarray([x[k] for x in data_holder], dtype=tp))
                 except Exception as e:  # noqa
+                    import pprint
+                    import logging
+                    logger = logging.getLogger('exception_logger')
                     logger.exception("Cannot batch data. Perhaps they are of inconsistent shape?")
                     if isinstance(dt, np.ndarray):
                         s = pprint.pformat([x[k].shape for x in data_holder])

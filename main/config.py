@@ -5,7 +5,7 @@ import sys
 import numpy as np
 
 
-class Config:
+class Config:  # TODO
     ## dataset
     dataset = 'COCO'  # 'COCO', 'PoseTrack', 'MPII'
     testset = 'val'  # train, test, val (there is no validation set for MPII)
