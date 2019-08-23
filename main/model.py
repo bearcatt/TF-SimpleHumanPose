@@ -10,8 +10,6 @@ from tfflat.base import ModelDesc
 
 from net.hrnet import HRNet
 
-resnet_arg_scope = partial(resnet_arg_scope, bn_trainable=cfg.bn_train)
-
 
 class Model(ModelDesc):
 

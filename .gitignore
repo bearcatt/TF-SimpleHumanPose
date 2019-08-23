@@ -1,3 +1,6 @@
+.idea
+.vscode
+
 *.jpg
 *.png
 *.pyc
@@ -8,4 +11,3 @@
 *.tar.gz
 *.pkl
 output/
-.vscode
