@@ -15,8 +15,10 @@ from .timer import Timer
 from .logger import colorlogger
 from .utils import approx_equal
 
+
 class ModelDesc(object):
     __metaclass__ = abc.ABCMeta
+
     def __init__(self):
         self._loss = None
         self._inputs = []
@@ -141,7 +143,7 @@ class Base(object):
             self.graph_ops = self._make_graph()
             if not isinstance(self.graph_ops, list) and not isinstance(self.graph_ops, tuple):
                 self.graph_ops = [self.graph_ops]
-        self.summary_dict.update( get_tower_summary_dict(self.net._tower_summary) )
+        self.summary_dict.update(get_tower_summary_dict(self.net._tower_summary))
 
     def load_weights(self, model=None):
 
@@ -163,7 +165,7 @@ class Base(object):
             self.logger.info('Initialized model weights from {} ...'.format(model))
             load_model(self.sess, model)
             if model.split('/')[-1].startswith('snapshot_'):
-                self.cur_epoch = int(model[model.find('snapshot_')+9:model.find('.ckpt')])
+                self.cur_epoch = int(model[model.find('snapshot_') + 9:model.find('.ckpt')])
                 self.logger.info('Current epoch is %d.' % self.cur_epoch)
         else:
             self.logger.critical('Load nothing. There is no model in path {}.'.format(model))
@@ -182,6 +184,7 @@ class Base(object):
                     feed_dict[inp] = blobs[i].reshape(*inp_shape)
         return feed_dict
 
+
 class Trainer(Base):
     def __init__(self, net, cfg, data_iter=None):
         self.lr_eval = cfg.lr
@@ -192,18 +195,19 @@ class Trainer(Base):
 
         # make data
         self._data_iter, self.itr_per_epoch = self._make_data()
-    
+
     def _make_data(self):
         from dataset import Dataset
         from gen_batch import generate_batch
 
         d = Dataset()
         train_data = d.load_train_data()
-        
+
         from tfflat.data_provider import DataFromList, MultiProcessMapDataZMQ, BatchData, MapData
         data_load_thread = DataFromList(train_data)
         if self.cfg.multi_thread_enable:
-            data_load_thread = MultiProcessMapDataZMQ(data_load_thread, self.cfg.num_thread, generate_batch, strict=True)
+            data_load_thread = MultiProcessMapDataZMQ(data_load_thread, self.cfg.num_thread, generate_batch,
+                                                      strict=True)
         else:
             data_load_thread = MapData(data_load_thread, generate_batch)
         data_load_thread = BatchData(data_load_thread, self.cfg.batch_size)
@@ -211,7 +215,7 @@ class Trainer(Base):
         data_load_thread.reset_state()
         dataiter = data_load_thread.get_data()
 
-        return dataiter, math.ceil(len(train_data)/self.cfg.batch_size/self.cfg.num_gpus) 
+        return dataiter, math.ceil(len(train_data) / self.cfg.batch_size / self.cfg.num_gpus)
 
     def _make_graph(self):
         self.logger.info("Generating training graph on {} GPUs ...".format(self.cfg.num_gpus))
@@ -241,7 +245,7 @@ class Trainer(Base):
                                     loss = self.net.get_loss(include_wd=True)
                                 else:
                                     loss = self.net.get_loss()
-                                self._input_list.append( self.net.get_inputs() )
+                                self._input_list.append(self.net.get_inputs())
 
                         tf.get_variable_scope().reuse_variables()
 
@@ -270,7 +274,7 @@ class Trainer(Base):
         return train_op
 
     def train(self):
-        
+
         # saver
         self.logger.info('Initialize saver ...')
         train_saver = Saver(self.sess, tf.global_variables(), self.cfg.model_dump_dir)
@@ -318,9 +322,8 @@ class Trainer(Base):
                 '%.2fh/epoch' % (self.tot_timer.average_time / 3600. * self.itr_per_epoch),
                 ' '.join(map(lambda x: '%s: %.4f' % (x[0], x[1]), itr_summary.items())),
             ]
-            
 
-            #TODO(display stall?)
+            # TODO(display stall?)
             if itr % self.cfg.display == 0:
                 self.logger.info(' '.join(screen))
 
@@ -328,6 +331,7 @@ class Trainer(Base):
                 train_saver.save_model(self.cur_epoch)
 
             self.tot_timer.toc()
+
 
 class Tester(Base):
     def __init__(self, net, cfg, data_iter=None):
@@ -358,19 +362,20 @@ class Tester(Base):
                     total_batches = batch_size * self.cfg.num_gpus
                     left_batches = total_batches - len(batch_data[i])
                     if left_batches > 0:
-                        batch_data[i] = np.append(batch_data[i], np.zeros((left_batches, *batch_data[i].shape[1:])), axis=0)
+                        batch_data[i] = np.append(batch_data[i], np.zeros((left_batches, *batch_data[i].shape[1:])),
+                                                  axis=0)
                         self.logger.warning("Fill some blanks to fit batch_size which wastes %d%% computation" % (
-                            left_batches * 100. / total_batches))
+                                left_batches * 100. / total_batches))
             else:
                 assert self.cfg.batch_size * self.cfg.num_gpus == len(batch_data[0]), \
                     "Input batch doesn't fit placeholder batch."
 
             for j, inputs in enumerate(self._input_list):
                 for i, inp in enumerate(inputs):
-                    feed_dict[ inp ] = batch_data[i][j * batch_size: (j+1) * batch_size]
+                    feed_dict[inp] = batch_data[i][j * batch_size: (j + 1) * batch_size]
 
-            #@TODO(delete)
-            assert (j+1) * batch_size == len(batch_data[0]), 'check batch'
+            # @TODO(delete)
+            assert (j + 1) * batch_size == len(batch_data[0]), 'check batch'
         return feed_dict, batch_size
 
     def _make_graph(self):
@@ -422,4 +427,3 @@ class Tester(Base):
 
     def test(self):
         pass
-

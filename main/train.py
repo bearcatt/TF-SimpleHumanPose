@@ -24,11 +24,10 @@ def parse_args():
         args.gpu_ids = ','.join(map(lambda x: str(x), list(range(*gpus))))
 
     return args
+
+
 args = parse_args()
 
 cfg.set_args(args.gpu_ids, args.continue_train)
 trainer = Trainer(Model(), cfg)
 trainer.train()
-
-
-

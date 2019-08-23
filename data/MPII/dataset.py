@@ -12,24 +12,26 @@ import matplotlib.pyplot as plt
 from scipy.io import savemat
 
 import sys
+
 cur_dir = os.path.dirname(__file__)
 sys.path.insert(0, osp.join(cur_dir, 'PythonAPI'))
 from pycocotools.coco import COCO
 
+
 class Dataset(object):
-    
     dataset_name = 'MPII'
     num_kps = 16
-    kps_names = ["r_ankle", "r_knee","r_hip", 
-                    "l_hip", "l_knee", "l_ankle",
-                  "pelvis", "throax",
-                  "upper_neck", "head_top",
-                  "r_wrist", "r_elbow", "r_shoulder",
-                  "l_shoulder", "l_elbow", "l_wrist"]
+    kps_names = ["r_ankle", "r_knee", "r_hip",
+                 "l_hip", "l_knee", "l_ankle",
+                 "pelvis", "throax",
+                 "upper_neck", "head_top",
+                 "r_wrist", "r_elbow", "r_shoulder",
+                 "l_shoulder", "l_elbow", "l_wrist"]
     kps_symmetry = [(0, 5), (1, 4), (2, 3), (10, 15), (11, 14), (12, 13)]
-    kps_lines = [(0, 1), (1, 2), (2, 6), (7, 12), (12, 11), (11, 10), (5, 4), (4, 3), (3, 6), (7, 13), (13, 14), (14, 15), (6, 7), (7, 8), (8, 9)]
+    kps_lines = [(0, 1), (1, 2), (2, 6), (7, 12), (12, 11), (11, 10), (5, 4), (4, 3), (3, 6), (7, 13), (13, 14),
+                 (14, 15), (6, 7), (7, 8), (8, 9)]
 
-    human_det_path = osp.join('..', 'data', dataset_name, 'dets', 'human_detection.json') # human detection result
+    human_det_path = osp.join('..', 'data', dataset_name, 'dets', 'human_detection.json')  # human detection result
     img_path = osp.join('..', 'data', dataset_name)
     train_annot_path = osp.join('..', 'data', dataset_name, 'annotations', 'train.json')
     test_annot_path = osp.join('..', 'data', dataset_name, 'annotations', 'test.json')
@@ -54,18 +56,18 @@ class Dataset(object):
             x2 = np.min((width - 1, x1 + np.max((0, w - 1))))
             y2 = np.min((height - 1, y1 + np.max((0, h - 1))))
             if ann['area'] > 0 and x2 >= x1 and y2 >= y1:
-                bbox = [x1, y1, x2-x1, y2-y1]
+                bbox = [x1, y1, x2 - x1, y2 - y1]
             else:
                 continue
-            
+
             if score:
-                data = dict(image_id = ann['image_id'], imgpath = imgname, bbox=bbox, joints=joints, score=1)
+                data = dict(image_id=ann['image_id'], imgpath=imgname, bbox=bbox, joints=joints, score=1)
             else:
-                data = dict(image_id = ann['image_id'], imgpath = imgname, bbox=bbox, joints=joints)
+                data = dict(image_id=ann['image_id'], imgpath=imgname, bbox=bbox, joints=joints)
             train_data.append(data)
 
         return train_data
-    
+
     def load_annot(self, db_set):
         if db_set == 'train':
             coco = COCO(self.train_annot_path)
@@ -120,5 +122,6 @@ class Dataset(object):
 
         # Blend the keypoints.
         return cv2.addWeighted(img, 1.0 - alpha, kp_mask, alpha, 0)
+
 
 dbcfg = Dataset()

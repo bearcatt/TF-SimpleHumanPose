@@ -8,3 +8,4 @@
 *.tar.gz
 *.pkl
 output/
+.vscode

@@ -3,11 +3,11 @@ import os.path as osp
 import sys
 import numpy as np
 
+
 class Config:
-    
     ## dataset
-    dataset = 'COCO' # 'COCO', 'PoseTrack', 'MPII'
-    testset = 'val' # train, test, val (there is no validation set for MPII)
+    dataset = 'COCO'  # 'COCO', 'PoseTrack', 'MPII'
+    testset = 'val'  # train, test, val (there is no validation set for MPII)
 
     ## directory
     cur_dir = osp.dirname(os.path.abspath(__file__))
@@ -18,14 +18,13 @@ class Config:
     vis_dir = osp.join(output_dir, 'vis', dataset)
     log_dir = osp.join(output_dir, 'log', dataset)
     result_dir = osp.join(output_dir, 'result', dataset)
- 
+
     ## model setting
-    backbone = 'resnet50' # 'resnet50', 'resnet101', 'resnet152'
     init_model = osp.join(data_dir, 'imagenet_weights', 'resnet_v1_' + backbone[6:] + '.ckpt')
-    
+
     ## input, output
-    input_shape = (256, 192) # (256,192), (384,288)
-    output_shape = (input_shape[0]//4, input_shape[1]//4)
+    input_shape = (256, 192)  # (256,192), (384,288)
+    output_shape = (input_shape[0] // 4, input_shape[1] // 4)
     if output_shape[0] == 64:
         sigma = 2
     elif output_shape[0] == 96:
@@ -58,7 +57,7 @@ class Config:
     num_gpus = 1
     continue_train = False
     display = 1
-    
+
     ## helper functions
     def get_lr(self, epoch):
         for e in self.lr_dec_epoch:
@@ -69,9 +68,10 @@ class Config:
             return self.lr / (self.lr_dec_factor ** i)
         else:
             return self.lr / (self.lr_dec_factor ** len(self.lr_dec_epoch))
-    
+
     def normalize_input(self, img):
         return img - self.pixel_means
+
     def denormalize_input(self, img):
         return img + self.pixel_means
 
@@ -82,10 +82,12 @@ class Config:
         os.environ["CUDA_VISIBLE_DEVICES"] = self.gpu_ids
         print('>>> Using /gpu:{}'.format(self.gpu_ids))
 
+
 cfg = Config()
 
 sys.path.insert(0, osp.join(cfg.root_dir, 'lib'))
 from tfflat.utils import add_pypath, make_dir
+
 add_pypath(osp.join(cfg.data_dir))
 add_pypath(osp.join(cfg.data_dir, cfg.dataset))
 make_dir(cfg.model_dump_dir)
@@ -94,6 +96,7 @@ make_dir(cfg.log_dir)
 make_dir(cfg.result_dir)
 
 from dataset import dbcfg
+
 cfg.num_kps = dbcfg.num_kps
 cfg.kps_names = dbcfg.kps_names
 cfg.kps_lines = dbcfg.kps_lines
@@ -101,4 +104,3 @@ cfg.kps_symmetry = dbcfg.kps_symmetry
 cfg.img_path = dbcfg.img_path
 cfg.human_det_path = dbcfg.human_det_path
 cfg.vis_keypoints = dbcfg.vis_keypoints
-
