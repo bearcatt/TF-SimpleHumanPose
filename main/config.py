@@ -21,7 +21,9 @@ class Config:  # TODO
     result_dir = osp.join(output_dir, 'result', dataset)
 
     ## model setting
-    init_model = osp.join(data_dir, 'imagenet_weights', 'resnet_v1_' + backbone[6:] + '.ckpt')
+    backbone = "w32"
+    init_model = osp.join(data_dir, 'imagenet_weights', 'hrnet_' + backbone + '.ckpt')
+    hrnet_config = osp.join(root_dir, 'lib', 'net', 'config', backbone + '.cfg')
 
     ## input, output
     input_shape = (256, 192)  # (256,192), (384,288)

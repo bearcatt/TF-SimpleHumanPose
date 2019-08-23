@@ -44,7 +44,7 @@ class Model(ModelDesc):
             image = tf.placeholder(tf.float32, shape=[None, *cfg.input_shape, 3])
             self.set_inputs(image)
 
-        resnet_fms = HRNet(cfg, image, is_train)
+        resnet_fms = HRNet(cfg.hrnet_config, image, is_train)
         heatmap_outs = self.head_net(resnet_fms, is_train)
 
         if is_train:
