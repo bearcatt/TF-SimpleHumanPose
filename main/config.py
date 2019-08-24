@@ -21,7 +21,7 @@ class Config:  # TODO
     result_dir = osp.join(output_dir, 'result', dataset)
 
     ## model setting
-    backbone = "w32"
+    backbone = "w30"
     init_model = osp.join(data_dir, 'imagenet_weights', 'hrnet_' + backbone + '.ckpt')
     hrnet_config = osp.join(root_dir, 'lib', 'net', 'config', backbone + '.cfg')
 
@@ -35,16 +35,16 @@ class Config:  # TODO
     pixel_means = np.array([[[123.68, 116.78, 103.94]]])
 
     ## training config
-    lr_dec_epoch = [90, 120]
-    end_epoch = 140
-    lr = 5e-4
+    lr_dec_epoch = [170, 200]
+    end_epoch = 210
+    lr = 1e-3
     lr_dec_factor = 10
     optimizer = 'adam'
     weight_decay = 1e-5
     bn_train = True
     batch_size = 32
-    scale_factor = 0.3
-    rotation_factor = 40
+    scale_factor = 0.35
+    rotation_factor = 45
 
     ## testing config
     useGTbbox = False
@@ -56,7 +56,7 @@ class Config:  # TODO
     ## others
     multi_thread_enable = True
     num_thread = 10
-    gpu_ids = '0'
+    gpu_ids = '0,1,2,3'
     num_gpus = 1
     continue_train = False
     display = 1
