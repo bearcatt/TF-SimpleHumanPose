@@ -69,9 +69,11 @@ def HRNet(config_file, input, bn_is_training):
     batch_norm_params = {'epsilon': 1e-5,
                          'scale': True,
                          'is_training': bn_is_training,
-                         'updates_collections': ops.GraphKeys.UPDATE_OPS}
+                         'updates_collections': ops.GraphKeys.UPDATE_OPS,
+                         'data_format': 'NCHW'}
     with slim.arg_scope([layers.batch_norm], **batch_norm_params):
         with slim.arg_scope([slim.conv2d],
+                            data_format='NCHW',
                             weights_initializer=he_normal_fanout(),
                             weights_regularizer=slim.l2_regularizer(cfg['NET']['weight_l2_scale'])):
             out = input

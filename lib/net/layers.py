@@ -86,9 +86,9 @@ def upsample_block(input, ratio, planes, scope):
     with tf.variable_scope(scope):
         _out = slim.conv2d(input, num_outputs=planes, kernel_size=[1, 1], stride=1,
                            activation_fn=None, normalizer_fn=batch_norm, padding='SAME')
-        shape = _out.shape
-        _out = tf.image.resize_nearest_neighbor(_out, (shape[1] * ratio, shape[1] * ratio))
-
+        _out = tf.keras.layers.UpSampling2D((ratio, ratio), data_format='channel_first')(_out)
+        # shape = out_.shape
+        # _out = tf.image.resize_nearest_neighbor(_out, (shape[1] * ratio, shape[2] * ratio))
     return _out
 
 

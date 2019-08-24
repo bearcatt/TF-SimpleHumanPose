@@ -27,7 +27,7 @@ class Dataset(object):
     kps_lines = [(1, 2), (0, 1), (0, 2), (2, 4), (1, 3), (6, 8), (8, 10), (5, 7), (7, 9), (12, 14), (14, 16), (11, 13),
                  (13, 15), (5, 6), (11, 12)]
 
-    human_det_path = osp.join('..', 'data', dataset_name, 'dets', 'human_detection.json')  # human detection result
+    human_det_path = osp.join('..', 'data', dataset_name, 'dets', 'COCO_val2017_detections_AP_H_56_person.json')
     img_path = osp.join('..', 'data', dataset_name, 'images')
     train_annot_path = osp.join('..', 'data', dataset_name, 'annotations', 'person_keypoints_train2017.json')
     val_annot_path = osp.join('..', 'data', dataset_name, 'annotations', 'person_keypoints_val2017.json')

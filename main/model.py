@@ -11,10 +11,10 @@ class Model(ModelDesc):
 
         msra_initializer = tf.contrib.layers.variance_scaling_initializer()
 
-        out = slim.conv2d(blocks[-1], cfg.num_kps, [1, 1],
+        out = slim.conv2d(blocks[0], cfg.num_kps, [1, 1],
                           trainable=trainable, weights_initializer=msra_initializer,
                           padding='SAME', normalizer_fn=None, activation_fn=None,
-                          scope='out')
+                          scope='out', data_format='NCHW')
 
         return out
 
@@ -44,8 +44,11 @@ class Model(ModelDesc):
             image = tf.placeholder(tf.float32, shape=[None, *cfg.input_shape, 3])
             self.set_inputs(image)
 
-        resnet_fms = HRNet(cfg.hrnet_config, image, is_train)
-        heatmap_outs = self.head_net(resnet_fms, is_train)
+        with tf.variable_scope('HRNET'):
+            image = tf.transpose(image, [0, 3, 1, 2])
+            hrnet_fms = HRNet(cfg.hrnet_config, image, is_train)
+            heatmap_outs = self.head_net(hrnet_fms, is_train)
+            heatmap_outs = tf.transpose(image, [0, 2, 3, 1])
 
         if is_train:
             gt_heatmap = tf.stop_gradient(self.render_gaussian_heatmap(target_coord, cfg.output_shape, cfg.sigma))

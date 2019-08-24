@@ -54,8 +54,7 @@ def load_model(sess, model_path):
             variables_to_restore[v_name] = v
             # vis_var_keep_dic.append(v.name.split(':')[0])
         else:
-            # print('Unrestored Variables: %s' % v.name)
-            pass
+            print('Unrestored Variables: %s' % v.name)
     # print('Extra Variables in ckpt', set(var_keep_dic) - set(vis_var_keep_dic))
 
     if len(variables_to_restore) > 0:

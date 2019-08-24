@@ -55,7 +55,7 @@ class HRModule():
                 else:
                     # for inter downsample layer, keep using input channel
                     # this can save number of parameters
-                    out = dwfn(out, input.shape[-1], scope_name, has_relu=True)
+                    out = dwfn(out, input.shape[1], scope_name, has_relu=True)
             return out
 
         output_channels = [self.num_channels * pow(2, i) for i in range(self.num_outputs)]

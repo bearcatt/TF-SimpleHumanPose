@@ -112,17 +112,15 @@ def generate_batch(d, stage='train'):
         target_valid = joints[:, 2]
 
         # for debug
-        vis = False
-        if vis:
-            filename = str(random.randrange(1, 500))
-            tmpimg = cropped_img.astype(np.float32).copy()
-            tmpimg = cfg.denormalize_input(tmpimg)
-            tmpimg = tmpimg.astype(np.uint8).copy()
-            tmpkps = np.zeros((3, cfg.num_kps))
-            tmpkps[:2, :] = target_coord.transpose(1, 0)
-            tmpkps[2, :] = target_valid
-            tmpimg = cfg.vis_keypoints(tmpimg, tmpkps)
-            cv2.imwrite(osp.join(cfg.vis_dir, filename + '_gt.jpg'), tmpimg)
+        # filename = str(random.randrange(1, 500))
+        # tmpimg = cropped_img.astype(np.float32).copy()
+        # tmpimg = cfg.denormalize_input(tmpimg)
+        # tmpimg = tmpimg.astype(np.uint8).copy()
+        # tmpkps = np.zeros((3, cfg.num_kps))
+        # tmpkps[:2, :] = target_coord.transpose(1, 0)
+        # tmpkps[2, :] = target_valid
+        # tmpimg = cfg.vis_keypoints(tmpimg, tmpkps)
+        # cv2.imwrite(osp.join(cfg.vis_dir, filename + '_gt.jpg'), tmpimg)
 
         return [cropped_img, target_coord, (target_valid > 0)]
 
